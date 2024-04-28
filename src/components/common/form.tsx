@@ -90,7 +90,7 @@ const Form = () => {
           <div className="w-full max-w-5xl mx-auto gap-2 md:gap-6 flex flex-col md:flex-row items-center md:items-start">
             <div className="flex-col md:flex-row w-full flex items-start gap-4">
 
-              <div className="flex flex-col gap-2 w-full md:w-auto md:flex-1">
+              <form className="flex flex-col gap-2 w-full md:w-auto md:flex-1">
 
                 <div className="flex gap-3 justify-between">
                   <div className="flex flex-col w-[80%]">
@@ -136,33 +136,8 @@ const Form = () => {
                     Get JSON Data
                   </Button>
                 </div>
-                {/* <div className="flex gap-3">
-                  <div className="flex flex-col">
-                    <Label htmlFor="prompt">
-                      <span className="text-xs mb-1 font-medium text-muted-foreground">Prompt</span>
-                    </Label>
-                    <Input name="prompt" type="text" placeholder="Most listened musics in Hard Rock category" />
-                  </div>
-                  <div className="flex flex-col">
-                    <Label htmlFor="prompt">
-                      <span className="text-xs mb-1 font-medium text-muted-foreground">Prompt</span>
-                    </Label>
-                    <Input name="prompt" type="text" placeholder="Most listened musics in Hard Rock category" />
-                  </div>
-                  <div className="flex flex-col">
-                    <Label htmlFor="prompt">
-                      <span className="text-xs mb-1 font-medium text-muted-foreground">Prompt</span>
-                    </Label>
-                    <Input name="prompt" type="text" placeholder="Most listened musics in Hard Rock category" />
-                  </div>
-                  <div className="flex flex-col-reverse">
-                    <Button variant="outline">
-                      <Trash2Icon className="size-4" />
-                    </Button>
-                  </div>
-                </div> */}
 
-              </div>
+              </form>
 
               <div className="flex flex-col w-full md:w-auto md:flex-1 overflow-hidden">
                 <div className="relative scrollbar-hide overflow-auto max-h-[400px] shadow-sm min-h-[350px] border border-neutral-200 dark:border-neutral-800 bg-neutral-100 dark:bg-neutral-900 w-full rounded-lg p-1">
