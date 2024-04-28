@@ -1,3 +1,4 @@
+import { ModeToggle } from "./mode-toggle";
 
 const Header = () => {
   return (
@@ -6,7 +7,9 @@ const Header = () => {
         <nav>
           <span className="text-xl font-bold">JSON AI</span>
         </nav>
-        <nav>github</nav>
+        <nav>
+          <ModeToggle />
+        </nav>
       </div>
     </header>
   );
