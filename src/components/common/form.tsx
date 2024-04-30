@@ -84,7 +84,6 @@ const Form = () => {
             Puedes definir los campos de tu objeto para devolver exactamente lo mismo desde la AI.
           </p>
         </div>
-        {/* <span className="text-muted-foreground text-sm mt-2">You can select one of the examples formats below.</span> */}
 
         <div className="flex items-center w-full justify-center">
           <div className="w-full max-w-5xl mx-auto gap-2 md:gap-6 flex flex-col md:flex-row items-center md:items-start">
