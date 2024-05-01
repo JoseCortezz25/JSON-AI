@@ -1,7 +1,12 @@
+"use client";
 import Linear from "@/components/common/linear";
 import Banner from "@/components/common/banner";
 import Form from "@/components/common/form";
 import Examples from "@/components/common/examples";
+import { jsonExample, typeJSONExample } from "@/lib/data";
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+import { Label } from "@/components/ui/label";
+import { dark } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
 export default function Home() {
   return (
@@ -19,6 +24,20 @@ export default function Home() {
             <p className="[&:not(:first-child)]:mt-6 text-xl text-muted-foreground !mt-2 mb-4">
               Puedes pasar el código de tus types y obtener un mocks como lo deseas con AI.
             </p>
+          </div>
+          <div className="flex w-full gap-8 flex-col md:flex-row">
+            <div className="preview-box">
+              <Label className="absolute top-4 right-4 text-neutral-700">Input</Label>
+              <SyntaxHighlighter language="ts">
+                {typeJSONExample}
+              </SyntaxHighlighter>
+            </div>
+            <div className="preview-box">
+              <Label className="absolute top-4 right-4 text-neutral-700">Output</Label>
+              <SyntaxHighlighter language="json">
+                {jsonExample}
+              </SyntaxHighlighter>
+            </div>
           </div>
         </div>
       </section>

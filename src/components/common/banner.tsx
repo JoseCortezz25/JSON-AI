@@ -1,12 +1,16 @@
 import { Button } from "../ui/button";
+import Logo from ".logo";
 
 const Banner = () => {
   return (
     <section className="w-full flex justify-center">
       <div className="flex flex-col items-center pt-16 sm:pt-24 md:pt-36 pb-10 w-full max-w-4xl">
-        <h2>JSON AI</h2>
+        <div className="mb-5 flex flex-col items-center justify-center">
+          <Logo className="size-[55px] mb-3" />
+          <h1 className="font-bold text-xl">JSON AI</h1>
+        </div>
         <h1 className="scroll-m-20 tracking-tight lg:text-5xl text-4xl md:text-6xl font-bold text-center">
-          Crear mocks JSON generados por la IA.
+          Crear mocks en JSON generados por IA.
         </h1>
         <p className="[&:not(:first-child)]:mt-6 text-center text-xl text-muted-foreground mt-4 mb-4">Obtén datos en formato JSON sobre cualquier tema con solo una instrucción. Comienza a obtener información de manera sencilla.</p>
 

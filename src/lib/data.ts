@@ -28,3 +28,31 @@ export const examples = [
     label: 'Get the top 10 countries in Europe'
   }
 ];
+
+export const typeJSONExample = 
+`type User = {
+  id: number;
+  name: string;
+  email: string;
+};
+`;
+
+export const jsonExample = 
+`[
+  {
+    "id": 1,
+    "name": "Usuario 1",
+    "email": "usuario1@example.com"
+  },
+  {
+    "id": 2,
+    "name": "Usuario 2",
+    "email": "usuario2@example.com"
+  },
+  {
+    "id": 3,
+    "name": "Usuario 3",
+    "email": "usuario3@example.com"
+  }
+]
+`;
