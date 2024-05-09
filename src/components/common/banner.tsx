@@ -36,7 +36,7 @@ const Banner = () => {
               <p>Ver repositorio</p>
             </Button>
           </a>
-          <Link href="/">
+          <Link href="/generate">
             <Button className="space-x-3">
               Comenzar a generar JSON
             </Button>
