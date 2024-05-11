@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { PlusIcon, Trash2Icon } from "lucide-react";
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 import { generate } from "@/actions/generate";
 import { toast } from "sonner";
 import SyntaxHighlighter from "react-syntax-highlighter/dist/esm/default-highlight";
@@ -19,23 +19,49 @@ const Page = () => {
     { name: 'field3', id: 'field3' }
   ]);
 
-  const submitGenerate = async () => {
+  const formatInputs = (fields: Node[]) => {
+    let formattedFields = '';
+
+    fields.forEach((field, index) => {
+      formattedFields += `${field.value},`;
+
+      if ((index + 1) % 3 === 0) {
+        formattedFields = formattedFields.slice(0, -1);
+        formattedFields += '\n';
+      }
+    });
+
+    return formattedFields;
+  };
+
+  const submitGenerate = async (e: any) => {
+    e.preventDefault();
+
+    console.log('submitGenerate');
+
     try {
       setLoading(true);
-      const instruction = 'List of the most beautiful books in the world';
-      const fields = 'name, type, description, age, author';
-      const count = '4';
-      const response = await generate(instruction, fields, count);
-      const result = response.replaceAll('```json', '').replaceAll('```', '');
-      setData(result);
+
+      const prompt = e.target[0].value as string;
+      const count = e.target[1].value;
+
+      const inputs: Node[] = Array.from(e.target as unknown as Node[])
+        .filter((node) => node.nodeName !== 'BUTTON');
+
+      const fields = formatInputs(inputs.slice(2, inputs.length));
+
+      // const response = await generate(prompt, fields, count);
+      // const result = response.replaceAll('```json', '').replaceAll('```', '');
+      // setData(result);
       setLoading(false);
     } catch (error) {
-      console.error(error);
+      // console.error(error);
       setLoading(false);
     }
   };
 
-  const onCopy = () => {
+  const onCopy = (e) => {
+    e.preventDefault();
     if (!navigator.clipboard) {
       toast.error("Clipboard is not supported in your browser.");
       return;
@@ -55,8 +81,8 @@ const Page = () => {
     return (
       <div className="grid grid-cols-[1fr_1fr_1fr_50px] gap-3">
         <Input name={`${name}-name`} type="text" placeholder="Name" />
-        <Select>
-          <SelectTrigger className="w-full">
+        <Select name={`${name}-type`} defaultValue="string">
+          <SelectTrigger className="w-full" >
             <SelectValue placeholder="String" />
           </SelectTrigger>
           <SelectContent>
@@ -93,7 +119,10 @@ const Page = () => {
     }
   };
 
-  const addField = () => {
+  const addField = (e) => {
+    console.log('e', e);
+    e.preventDefault();
+
     setFields(prevState => [
       ...fields,
       {
@@ -101,8 +130,19 @@ const Page = () => {
         id: `field${prevState.length + 1}`
       }
     ]);
-
   };
+
+  const ListFields = ({ fields }: any) => {
+    return (
+      <>
+        {fields.map((field, index) => (
+          <Fields key={index} name={field.name} />
+        ))}
+      </>
+    );
+  };
+
+
 
   return (
     <main>
@@ -114,9 +154,9 @@ const Page = () => {
                 Convierte types a mocks en JSON<br />
                 Para realizar pruebas de tus aplicaciones.
               </h2>
-              <p className="leading-7 [&:not(:first-child)]:mt-6 !mt-2 text-muted-foreground text-start">
+              {/* <p className="leading-7 [&:not(:first-child)]:mt-6 !mt-2 text-muted-foreground text-start">
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit, adipisci. Qui adipisci quidem veniam sequi eos eligendi, enim labore ducimus aspernatur expedita quam laudantium facere deserunt velit sed nisi dolor.
-              </p>
+              </p> */}
             </div>
           </div>
         </div>
@@ -124,13 +164,13 @@ const Page = () => {
       <section className="min-h-[60vh] py-[6rem] sm:pt-[6rem]">
         <div className="max-w-7xl mx-auto p-4">
           <div className="flex flex-col md:flex-row gap-6">
-            <form className="flex flex-col gap-2 w-full md:w-[50%] md:flex-1" onSubmit={async (event) => {
+            {/* onSubmit={async (event) => {
               event.preventDefault();
-              await submitGenerate();
-              // Aquí puedes llamar a la función que maneja el envío del formulario
-            }}>
+              await submitGenerate(event);
+            }} */}
+            <form className="flex flex-col gap-2 w-full md:w-[50%] md:flex-1" >
 
-              {/* <div className="flex gap-3 justify-between">
+              <div className="flex gap-3 justify-between">
                 <div className="flex flex-col w-[80%]">
                   <Label htmlFor="prompt">
                     <span className="text-xs mb-1 font-medium text-muted-foreground">Prompt</span>
@@ -141,12 +181,12 @@ const Page = () => {
                   <Label htmlFor="limit">
                     <span className="text-xs mb-1 font-medium text-muted-foreground">Limit</span>
                   </Label>
-                  <Input name="limit" type="number" placeholder="10" />
+                  <Input name="limit" type="number" placeholder="10" min={1} max={15} />
                 </div>
-              </div> */}
+              </div>
 
 
-              {/* <div className="grid grid-cols-[1fr_1fr_1fr_50px] gap-3">
+              <div className="grid grid-cols-[1fr_1fr_1fr_50px] gap-3">
                 <div>
                   <span className="text-xs mb-1 font-medium text-muted-foreground">Name</span>
                 </div>
@@ -157,20 +197,19 @@ const Page = () => {
                   <span className="text-xs mb-1 font-medium text-muted-foreground">Descritpion</span>
                 </div>
                 <div>
-                  <span className="text-xs mb-1 font-medium text-muted-foreground">icon</span>
+                  <span className="text-xs mb-1 font-medium text-muted-foreground">Icon</span>
                 </div>
-              </div> */}
+              </div>
 
-              {/* {fields.map((field, index) => (
-                <Fields key={index} name={field.name} />
-              ))} */}
+              <ListFields fields={fields} />
+
 
               <div className="flex flex-col space-y-2">
                 <Button variant="outline" onClick={addField}>
                   <PlusIcon className="size-4 mr-1" />
                   <p>Add field</p>
                 </Button>
-                <Button variant="default">
+                <Button variant="default" onClick={submitGenerate}>
                   Get JSON Data
                 </Button>
               </div>

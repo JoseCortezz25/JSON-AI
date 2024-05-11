@@ -1,5 +1,6 @@
 "use server";
-import { PromptTemplate } from '@langchain/core/prompts';
+// import { PromptTemplate } from '@langchain/core/prompts';
+import { PromptTemplate } from 'langchain/prompts';
 import { ChatGoogleGenerativeAI } from '@langchain/google-genai';
 
 const model = new ChatGoogleGenerativeAI({
