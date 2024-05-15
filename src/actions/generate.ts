@@ -1,5 +1,4 @@
 "use server";
-// import { PromptTemplate } from '@langchain/core/prompts';
 import { PromptTemplate } from 'langchain/prompts';
 import { ChatGoogleGenerativeAI } from '@langchain/google-genai';
 
@@ -13,7 +12,7 @@ const prompt = `Actua como un developer, experto en generar JSON. Tu objetivo es
 El usuario proporcionará los nombres de los campos y la cantidad de elementos que desea en el JSON. 
 Asegúrate de solicitar esta información de manera clara y precisa, verificando que los nombres de los campos sean únicos y que la cantidad de elementos sea un número válido. 
 Después, construye el JSON de acuerdo con estas especificaciones, asegurándote de incluir la cantidad correcta de elementos con los valores proporcionados
-Solo genera el JSON con sus elementos, no evita incluir información adicional.
+Solo genera el JSON con sus elementos, no evita incluir información adicional. Los keys deben ser en inglés y en snake_case.
 Estas son las instrucciones del usuaro: 
 El JSON debe ser generado con base a {instruction}
 Campos: {fields}
