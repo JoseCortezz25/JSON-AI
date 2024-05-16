@@ -95,6 +95,10 @@ const Page = () => {
   };
 
   const removeField = (index: number) => {
+    if (rows.length === 3) {
+      toast.error("You need to have at least 3 fields.");
+      return;
+    };
     const newRows = [...rows];
     newRows.splice(index, 1);
     setRows(newRows);
@@ -107,8 +111,8 @@ const Page = () => {
           <div className="max-w-7xl mx-auto">
             <div className="flex flex-col">
               <h2 className="scroll-m-20 border-b text-3xl tracking-tight transition-colors first:mt-0 font-semibold border-none p-0">
-                Convierte types a mocks en JSON<br />
-                Para realizar pruebas de tus aplicaciones.
+                Genera JSON con los valores <br />
+                y estableciento esquema <br />
               </h2>
               {/* <p className="leading-7 [&:not(:first-child)]:mt-6 !mt-2 text-muted-foreground text-start">
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit, adipisci. Qui adipisci quidem veniam sequi eos eligendi, enim labore ducimus aspernatur expedita quam laudantium facere deserunt velit sed nisi dolor.
@@ -120,10 +124,6 @@ const Page = () => {
       <section className="min-h-[60vh] py-[6rem] sm:pt-[6rem]">
         <div className="max-w-7xl mx-auto p-4">
           <div className="flex flex-col md:flex-row gap-6">
-            {/* onSubmit={async (event) => {
-              event.preventDefault();
-              await submitGenerate(event);
-            }} */}
             <div className="flex flex-col gap-2 w-full md:w-[50%] md:flex-1" id="form-json">
 
               <div className="flex gap-3 justify-between">
@@ -238,6 +238,12 @@ const Page = () => {
                   <span className="bg-neutral-100 dark:bg-neutral-900 inline-flex items-center border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 text-foreground h-8 rounded-md">
                     {data.split('}').length - 1} items
                   </span>
+                  {/* <Button
+                    onClick={onDownloadCSV}
+                    variant="ghost"
+                    className="bg-neutral-100 dark:bg-neutral-900 inline-flex items-center border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 text-foreground h-8 rounded-md">
+                    CSV
+                  </Button> */}
                   <Button
                     onClick={onCopy}
                     variant="ghost"

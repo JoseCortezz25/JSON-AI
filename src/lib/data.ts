@@ -1,31 +1,42 @@
 export const examples = [
   {
     id: 1,
-    label: 'List of Rick and Morty characters'
+    label: 'Lista de personajes de Rick y Morty'
   },
   {
     id: 2,
-    label: 'List of Pokémon'
+    label: 'Lista de Pokémon'
   },
   {
     id: 3,
-    label: 'Top science fiction books read in 2020'
+    label: 'Principales libros de ciencia ficción leídos en 2020'
   },
   {
     id: 4,
-    label: 'List of random legendary actors who had role in Hollywood'
+    label: 'Lista de actores legendarios aleatorios que tuvieron un papel en Hollywood'
   },
   {
     id: 5,
-    label: 'Object-oriented programming languages'
+    label: 'Lenguajes de programación orientados a objetos'
   },
   {
     id: 6,
-    label: 'Generate random news about sport topic'
+    label: 'Generar noticias aleatorias sobre el tema deportivo'
   },
   {
     id: 7,
-    label: 'Get the top 10 countries in Europe'
+    label: 'Obtener los 10 mejores países de Europa'
+  },
+  {
+    id: 8,
+    label: 'Lista de personajes de Marvel Comics'
+  },
+  {
+    id: 9,
+    label: 'Ranking de los mejores restaurantes de comida italiana en Nueva York'
+  }, {
+    id: 10,
+    label: 'Lista de marcas de teléfonos inteligentes'
   }
 ];
 
