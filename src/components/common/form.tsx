@@ -128,7 +128,7 @@ const Form = () => {
         </div>
 
         <div className="min-h-[60vh] sm:pb-[6rem]">
-          <div className="max-w-7xl mx-auto p-4">
+          <div className="max-w-4xl mx-auto p-4">
             <div className="flex flex-col md:flex-row gap-6">
               <div className="flex flex-col gap-2 w-full md:w-[50%] md:flex-1" id="form-json">
 

@@ -6,7 +6,6 @@ import Examples from "@/components/common/examples";
 import { jsonExample, typeJSONExample } from "@/lib/data";
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { Label } from "@/components/ui/label";
-import { dark } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
 export default function Home() {
   return (
