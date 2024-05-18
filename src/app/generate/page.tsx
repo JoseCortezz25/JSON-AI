@@ -50,7 +50,6 @@ const Page = () => {
 
   const submitGenerate = async () => {
     try {
-      setLoading(true);
       if (!validateRows()) {
         toast.error("Please fill in all fields.");
         return;
@@ -60,6 +59,7 @@ const Page = () => {
         toast.error("Please fill in the prompt and count fields.");
         return;
       }
+      setLoading(true);
 
       const formattedFields = formatInputs(rows);
 
@@ -82,6 +82,24 @@ const Page = () => {
     if (!data) return;
     navigator.clipboard.writeText(data);
     toast.info("JSON data copied to clipboard.");
+  };
+
+  const onDownloadJSON = () => {
+    if (!data) {
+      toast.error("No data to download.");
+      return;
+    }
+
+    const json = JSON.stringify(rows);
+    const blob = new Blob([json], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = 'data.json';
+    link.click();
+    URL.revokeObjectURL(url);
+
+    toast.info("JSON data downloaded.");
   };
 
   const handleInputChange = (index: number, key: keyof RowData, value: string) => {
@@ -238,12 +256,12 @@ const Page = () => {
                   <span className="bg-neutral-100 dark:bg-neutral-900 inline-flex items-center border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 text-foreground h-8 rounded-md">
                     {data.split('}').length - 1} items
                   </span>
-                  {/* <Button
-                    onClick={onDownloadCSV}
+                  <Button
+                    onClick={onDownloadJSON}
                     variant="ghost"
                     className="bg-neutral-100 dark:bg-neutral-900 inline-flex items-center border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 text-foreground h-8 rounded-md">
-                    CSV
-                  </Button> */}
+                    JSON
+                  </Button>
                   <Button
                     onClick={onCopy}
                     variant="ghost"
