@@ -9,7 +9,10 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@hookform/resolvers": "^3.4.0",
+    "@langchain/anthropic": "^0.1.21",
     "@langchain/google-genai": "^0.0.12",
+    "@langchain/openai": "^0.0.33",
     "@radix-ui/react-dialog": "^1.0.5",
     "@radix-ui/react-dropdown-menu": "^2.0.6",
     "@radix-ui/react-label": "^2.0.2",
@@ -24,11 +27,13 @@
     "prompts": "link:@langchain/core/prompts",
     "react": "^18",
     "react-dom": "^18",
+    "react-hook-form": "^7.51.4",
     "react-markdown": "^9.0.1",
     "react-syntax-highlighter": "^15.5.0",
     "sonner": "^1.4.41",
     "tailwind-merge": "^2.3.0",
-    "tailwindcss-animate": "^1.0.7"
+    "tailwindcss-animate": "^1.0.7",
+    "zod": "^3.23.8"
   },
   "devDependencies": {
     "@types/node": "^20",
