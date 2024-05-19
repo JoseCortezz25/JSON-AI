@@ -10,6 +10,9 @@ import { generate } from "@/actions/generate";
 import { toast } from "sonner";
 import SkeletonPreview from "@/components/common/skeleton-preview";
 import SyntaxHighlighter from "react-syntax-highlighter/dist/esm/default-highlight";
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
+import FormSettings from "@/components/common/form-settings";
+import { Creativity, Models, Options } from "@/lib/types";
 
 interface RowData {
   name: string;
@@ -51,42 +54,54 @@ const Page = () => {
   const submitGenerate = async () => {
     try {
       if (!validateRows()) {
-        toast.error("Please fill in all fields.");
+        toast.error("Completa todos los campos..");
         return;
       }
 
       if (prompt === '' || count === '') {
-        toast.error("Please fill in the prompt and count fields.");
+        toast.error("Ingresa el prompt y la cantidad de elementos.");
         return;
       }
       setLoading(true);
 
       const formattedFields = formatInputs(rows);
 
-      const response = await generate(prompt, formattedFields, count);
+      const options: Options = {
+        model: (localStorage.getItem('model') as Models) || "",
+        creativity: (localStorage.getItem('creativity') as Creativity) || "medium",
+        apiKey: localStorage.getItem('apiKey') || ""
+      };
+
+      if (!options.model || !options.apiKey) {
+        toast.error("Por favor, selecciona un modelo y proporciona la API KEY.");
+        setLoading(false);
+        return;
+      }
+
+      const response = await generate(prompt, formattedFields, count, options);
       const result = response.toString().replaceAll('```json', '').replaceAll('```', '');
       setData(result);
       setLoading(false);
     } catch (error) {
-      toast.error("Error generating JSON. Please try again.");
+      toast.error("Error al generar el JSON. Verifica los valores de tu configuración.");
       setLoading(false);
     }
   };
 
   const onCopy = () => {
     if (!navigator.clipboard) {
-      toast.error("Clipboard is not supported in your browser.");
+      toast.error("No se puede copiar al portapapeles.");
       return;
     }
 
     if (!data) return;
     navigator.clipboard.writeText(data);
-    toast.info("JSON data copied to clipboard.");
+    toast.info("JSON ha sido copiado al portapapeles.");
   };
 
   const onDownloadJSON = () => {
     if (!data) {
-      toast.error("No data to download.");
+      toast.error("No hay datos para descargar.");
       return;
     }
 
@@ -99,7 +114,7 @@ const Page = () => {
     link.click();
     URL.revokeObjectURL(url);
 
-    toast.info("JSON data downloaded.");
+    toast.info("JSON ha sido descargado.");
   };
 
   const handleInputChange = (index: number, key: keyof RowData, value: string) => {
@@ -114,7 +129,7 @@ const Page = () => {
 
   const removeField = (index: number) => {
     if (rows.length === 3) {
-      toast.error("You need to have at least 3 fields.");
+      toast.error("Necesitas al menos 3 campos para generar el JSON.");
       return;
     };
     const newRows = [...rows];
@@ -132,9 +147,6 @@ const Page = () => {
                 Genera JSON con los valores <br />
                 y estableciento esquema <br />
               </h2>
-              {/* <p className="leading-7 [&:not(:first-child)]:mt-6 !mt-2 text-muted-foreground text-start">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit, adipisci. Qui adipisci quidem veniam sequi eos eligendi, enim labore ducimus aspernatur expedita quam laudantium facere deserunt velit sed nisi dolor.
-              </p> */}
             </div>
           </div>
         </div>
@@ -143,7 +155,6 @@ const Page = () => {
         <div className="max-w-7xl mx-auto p-4">
           <div className="flex flex-col md:flex-row gap-6">
             <div className="flex flex-col gap-2 w-full md:w-[50%] md:flex-1" id="form-json">
-
               <div className="flex gap-3 justify-between">
                 <div className="flex flex-col w-[80%]">
                   <Label htmlFor="prompt">
@@ -172,7 +183,6 @@ const Page = () => {
                   />
                 </div>
               </div>
-
 
               <div className="grid grid-cols-[1fr_1fr_1fr_50px] gap-3">
                 <div>
@@ -237,17 +247,34 @@ const Page = () => {
                 </div>
               ))}
 
-
               <div className="flex flex-col space-y-2">
                 <Button variant="outline" onClick={addRow}>
                   <PlusIcon className="size-4 mr-1" />
                   <p>Add field</p>
                 </Button>
-                <Button variant="default" onClick={submitGenerate}>
-                  Get JSON Data
-                </Button>
-              </div>
+                <div className="grid grid-cols-[1fr_70px] gap-2">
+                  <Button variant="default" onClick={submitGenerate}>
+                    Get JSON Data
+                  </Button>
 
+                  <Sheet>
+                    <SheetTrigger className="flex justify-end">
+                      <div className="button-setting">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-5">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 6h9.75M10.5 6a1.5 1.5 0 1 1-3 0m3 0a1.5 1.5 0 1 0-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-9.75 0h9.75" />
+                        </svg>
+                      </div>
+                    </SheetTrigger>
+                    <SheetContent className="w-[400px] sm:w-[540px]">
+                      <SheetHeader>
+                        <SheetTitle>Configuración</SheetTitle>
+                        <FormSettings />
+                      </SheetHeader>
+                    </SheetContent>
+                  </Sheet>
+
+                </div>
+              </div>
             </div>
 
             <div className="flex flex-col w-full md:w-auto md:flex-1 overflow-hidden">

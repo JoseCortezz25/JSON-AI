@@ -109,13 +109,30 @@
         }
       }
     }
-
-    // code {
-    //   // text-shadow: none !important;
-    // }
   }
 }
 
 pre {
   background-color: transparent !important;
+}
+
+.select-item-model {
+  @apply cursor-pointer flex gap-3 items-center w-full py-2;
+}
+
+.button-setting {
+  @apply text-black dark:text-white hover:bg-gray-100 dark:hover:bg-[#292524] h-full w-[48px] rounded-lg;
+  @apply flex items-center justify-center;
+}
+
+.group-fields {
+  @apply flex flex-col gap-3 mb-8;
+
+  label {
+    @apply text-base text-black/80 dark:text-white;
+  }
+
+  p {
+    @apply text-sm text-black/50 dark:text-white/50;
+  }
 }

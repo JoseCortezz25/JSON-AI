@@ -1,12 +1,37 @@
 "use server";
 import { PromptTemplate } from 'langchain/prompts';
 import { ChatGoogleGenerativeAI } from '@langchain/google-genai';
+import { ChatAnthropic } from "@langchain/anthropic";
+import { ChatOpenAI } from "@langchain/openai";
+import { Options } from '@/lib/types';
 
-const model = new ChatGoogleGenerativeAI({
-  model: 'gemini-pro',
-  apiKey: process.env.GOOGLE_GENERATIVE_AI_API_KEY,
-  temperature: 0.1
-});
+const setCreativity = (creativity: string) => creativity === 'low' ? 0.1 : creativity === 'high' ? 0.9 : 0.5;
+
+const getAdaptedModel = (options: Options) => {
+  if (options.model.includes('gpt')) {
+    return new ChatOpenAI({
+      temperature: setCreativity(options.creativity),
+      apiKey: options.apiKey,
+      model: options.model
+    });
+  }
+
+  if (options.model.includes('claude')) {
+    return new ChatAnthropic({
+      temperature: setCreativity(options.creativity),
+      model: options.model,
+      apiKey: options.apiKey
+    });
+  }
+
+  if (options.model.includes('gemini')) {
+    return new ChatGoogleGenerativeAI({
+      model: options.model,
+      apiKey: options.apiKey,
+      temperature: setCreativity(options.creativity)
+    });
+  }
+};
 
 const prompt = `Actua como un developer, experto en generar JSON. Tu objetivo es generar un JSON con los valores y la cantidad de elementos especificados por el usuario. 
 El usuario proporcionará los nombres de los campos y la cantidad de elementos que desea en el JSON. 
@@ -19,13 +44,18 @@ Campos: {fields}
 Cantidad de elementos: {count}
 Debes retornarlo en markdown.`;
 
-export const generate = async(instruction: string, fields: string, count: string) => {
+export const generate = async(instruction: string, fields: string, count: string, options: Options) => {
   try {
     const promptTemplate = new PromptTemplate({
       inputVariables: ['instruction', 'fields', 'count'],
       template: prompt
     });
 
+    const model = getAdaptedModel(options);
+
+    if (!model) {
+      throw new Error('Model not found');
+    }
     const chain = promptTemplate.pipe(model);
 
     const response = await chain.invoke({ instruction, fields, count });
