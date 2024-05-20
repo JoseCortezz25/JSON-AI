@@ -1,7 +1,7 @@
 "use client";
 import Linear from "@/components/common/linear";
 import Banner from "@/components/common/banner";
-import Form from "@/components/common/form";
+import JSONGenerateSection from "@/components/common/json-generate-section";
 import Examples from "@/components/common/examples";
 import { jsonExample, typeJSONExample } from "@/lib/data";
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
@@ -12,7 +12,7 @@ export default function Home() {
     <main>
       <Banner />
       <Linear />
-      <Form />
+      <JSONGenerateSection />
       <section className="w-full flex justify-center">
         <div className="flex flex-col items-center pt-16 sm:pt-24 md:pt-36 pb-10 w-full max-w-4xl gap-8 px-4 sm:px-6 lg:px-0">
           <div className="flex flex-col w-full">
