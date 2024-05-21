@@ -1,6 +1,7 @@
 import Image from "next/image";
+import { HTMLAttributes } from "react";
 
-const Logo = (props: any) => {
+const Logo = (props: HTMLAttributes<HTMLDivElement>) => {
   return (
     <div {...props}>
       <Image src="/dark-logo.svg" alt="" className="!relative w-full h-full flex dark:hidden" fill />
