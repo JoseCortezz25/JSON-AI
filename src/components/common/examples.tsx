@@ -26,7 +26,7 @@ const Examples = () => {
 
   return (
     <section className="flex justify-center">
-      <div className="flex flex-col pt-16 sm:pt-24 md:pt-36 pb-36 w-full max-w-4xl gap-8 px-4 sm:px-6 lg:px-0">
+      <div className="flex flex-col pt-16 sm:pt-24 md:pt-25 pb-36 w-full max-w-4xl gap-8 px-4 sm:px-6 lg:px-0">
         <div>
           <h2 className="scroll-m-20 text-4xl tracking-tight lg:text-5xl !text-3xl font-semibold !mb-0">Algunos ejemplos</h2>
           <p className="[&:not(:first-child)]:mt-6 text-xl text-muted-foreground !mt-2 mb-8">

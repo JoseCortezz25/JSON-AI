@@ -1,8 +1,11 @@
-import Link from "next/link";
 import Logo from "./logo";
 import { Button } from "../ui/button";
 
 const Banner = () => {
+  const toSection = () => {
+    document.getElementById("form-section")?.scrollIntoView({ behavior: "smooth" });
+  };
+
   return (
     <section className="w-full flex justify-center">
       <div className="flex flex-col items-center pt-16 sm:pt-24 md:pt-36 pb-10 w-full max-w-4xl">
@@ -36,11 +39,9 @@ const Banner = () => {
               <p>Ver repositorio</p>
             </Button>
           </a>
-          <Link href="/generate">
-            <Button className="space-x-3">
-              Comenzar a generar JSON
-            </Button>
-          </Link>
+          <Button className="space-x-3" onClick={toSection}>
+            Comenzar a generar JSON
+          </Button>
         </div>
       </div>
     </section>

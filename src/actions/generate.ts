@@ -42,6 +42,7 @@ Estas son las instrucciones del usuaro:
 El JSON debe ser generado con base a {instruction}
 Campos: {fields}
 Cantidad de elementos: {count}
+Debes retornar solamente el arreglos con los items. Debes evitar que el arreglo este dentro de un elemento. 
 Debes retornarlo en markdown.`;
 
 export const generate = async(instruction: string, fields: string, count: string, options: Options) => {
