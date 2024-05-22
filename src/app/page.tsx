@@ -1,6 +1,8 @@
 "use client";
 import { redirect } from "next/navigation";
 
-export const RootPage = () => {
+const RootPage = () => {
   redirect('/es');
 };
+
+export default RootPage;

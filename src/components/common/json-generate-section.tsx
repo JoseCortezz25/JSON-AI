@@ -4,7 +4,6 @@ import { Badge } from "../ui/badge";
 import GenerateForm from "./generate-form";
 import { useTranslations } from "next-intl";
 
-
 const JSONGenerateSection = () => {
   const t = useTranslations('HomePage');
 
@@ -22,7 +21,6 @@ const JSONGenerateSection = () => {
 
         <div>
           <h3 className="mb-3 text-sm text-muted-foreground">
-            {/* Puedes seleccionar uno de los formatos de ejemplo a continuación. */}
             {t('form.subtitle')}
           </h3>
           <div className="flex flex-wrap gap-2">
