@@ -138,7 +138,7 @@ const GenerateForm = () => {
 
   return (
     <section>
-      <div className="max-w-7xl mx-auto p-4">
+      <div className="max-w-7xl mx-auto py-4">
         <div className="flex flex-col md:flex-row gap-6">
           <div className="flex flex-col gap-2 w-full md:w-[50%] md:flex-1" id="form-json">
             <div className="flex gap-3 justify-between">
