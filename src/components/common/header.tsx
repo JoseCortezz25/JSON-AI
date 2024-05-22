@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Logo from "./logo";
 import { ModeToggle } from "./mode-toggle";
+import { LanguageToggle } from "./language-toggle";
 
 const Header = () => {
   return (
@@ -12,7 +13,8 @@ const Header = () => {
             <span className="font-bold text-sm">JSON AI</span>
           </Link>
         </nav>
-        <nav>
+        <nav className="flex gap-3">
+          <LanguageToggle />
           <ModeToggle />
         </nav>
       </div>

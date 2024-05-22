@@ -22,6 +22,7 @@
     "langchain": "^0.1.36",
     "lucide-react": "^0.372.0",
     "next": "14.2.2",
+    "next-intl": "^3.14.0",
     "next-themes": "^0.3.0",
     "prompts": "link:@langchain/core/prompts",
     "react": "^18",

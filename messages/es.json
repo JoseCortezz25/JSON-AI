@@ -1,0 +1,28 @@
+{
+  "HomePage": {
+    "banner": {
+      "title": "Crear mocks en JSON generados por IA.",
+      "description": "Obtén datos en formato JSON sobre cualquier tema con solo una instrucción. Comienza a obtener información de manera sencilla.",
+      "primaryCta": "Comenzar a generar",
+      "secondaryCta": "Ver repositorio"
+    },
+    "form": {
+      "title": "Establece tu estructura, comienza a crear mocks en JSON.",
+      "description": "Puedes definir los campos de tu objeto para devolver exactamente lo mismo desde la AI.",
+      "subtitle": "Puedes seleccionar uno de los formatos de ejemplo a continuación."
+    },
+    "types": {
+      "title": "Convierte types a mocks en JSON, para realizar pruebas de tus aplicaciones.",
+      "description": "Puedes pasar el código de tus types y obtener un mocks como lo deseas con AI."
+    },
+    "examples": {
+      "title": "Algunos ejemplos",
+      "description": "Puedes ver más ejemplos. Selecciona uno de los siguientes items para ver más detalles."
+    }
+  },
+  "NotFoundPage": {
+    "title": "Página no encontrada",
+    "description": "Lo sentimos, parece que la página que estás buscando no existe. No te preocupes, ¡puedes volver a la página de inicio!",
+    "cta": "Volver al Home"
+  }
+}
