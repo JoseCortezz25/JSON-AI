@@ -1,7 +1,10 @@
 import Logo from "./logo";
 import { Button } from "../ui/button";
+import { useTranslations } from "next-intl";
 
 const Banner = () => {
+  const t = useTranslations('HomePage');
+
   const toSection = () => {
     document.getElementById("form-section")?.scrollIntoView({ behavior: "smooth" });
   };
@@ -14,9 +17,11 @@ const Banner = () => {
           <h1 className="font-bold text-xl">JSON AI</h1>
         </div>
         <h1 className="scroll-m-20 tracking-tight lg:text-5xl text-4xl md:text-6xl font-bold text-center">
-          Crear mocks en JSON generados por IA.
+          {t('banner.title')}
         </h1>
-        <p className="[&:not(:first-child)]:mt-6 text-center text-xl text-muted-foreground mt-4 mb-4">Obtén datos en formato JSON sobre cualquier tema con solo una instrucción. Comienza a obtener información de manera sencilla.</p>
+        <p className="[&:not(:first-child)]:mt-6 text-center text-xl text-muted-foreground mt-4 mb-4">
+          {t('banner.description')}
+        </p>
 
         <div className="flex gap-3 mt-3">
           <a href="https://github.com/JoseCortezz25/JSON-AI" target="_blank" rel="noopener noreferrer">
@@ -36,11 +41,11 @@ const Banner = () => {
                 </svg>
               </div>
 
-              <p>Ver repositorio</p>
+              <p>{t('banner.secondaryCta')}</p>
             </Button>
           </a>
           <Button className="space-x-3" onClick={toSection}>
-            Comenzar a generar JSON
+            {t('banner.primaryCta')}
           </Button>
         </div>
       </div>
