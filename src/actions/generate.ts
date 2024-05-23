@@ -45,6 +45,18 @@ Cantidad de elementos: {count}
 Debes retornar solamente el arreglos con los items. Debes evitar que el arreglo este dentro de un elemento. 
 Debes retornarlo en markdown.`;
 
+const promptUsingTypes = `Actua como un developer, experto en generar JSON. Tu objetivo es generar un JSON con los valores y la cantidad de elementos especificados por el usuario. 
+El usuario proporcionará una interfaceo o type de algun lenguaje de programación y la cantidad de elementos que desea en el JSON. 
+Asegúrate de solicitar esta información de manera clara y precisa, verificando que los nombres de los campos sean únicos y que la cantidad de elementos sea un número válido. 
+Después, construye el JSON de acuerdo con estas especificaciones, asegurándote de incluir la cantidad correcta de elementos con los valores proporcionados
+Solo genera el JSON con sus elementos, no evita incluir información adicional. Los keys deben ser en inglés y en snake_case.
+Estas son las instrucciones del usuaro: 
+El JSON debe ser generado con base a {instruction}
+Interface o type dado por el usuario: {types}
+Cantidad de elementos: {count}
+Debes retornar solamente el arreglos con los items. Debes evitar que el arreglo este dentro de un elemento. 
+Debes retornarlo en markdown.`;
+
 export const generate = async(instruction: string, fields: string, count: string, options: Options) => {
   try {
     const promptTemplate = new PromptTemplate({
@@ -60,6 +72,28 @@ export const generate = async(instruction: string, fields: string, count: string
     const chain = promptTemplate.pipe(model);
 
     const response = await chain.invoke({ instruction, fields, count });
+    
+    return response.content;
+  } catch (error) {
+    throw new Error('Error generating JSON. Please try again.');
+  }
+};
+
+export const generateUsingTypes = async (instruction: string, types: string, count:string, options: Options) => {
+  try {
+    const promptTemplate = new PromptTemplate({
+      inputVariables: ['instruction', 'types', 'count'],
+      template: promptUsingTypes
+    });
+
+    const model = getAdaptedModel(options);
+
+    if (!model) {
+      throw new Error('Model not found');
+    }
+    const chain = promptTemplate.pipe(model);
+
+    const response = await chain.invoke({ instruction, types, count });
     
     return response.content;
   } catch (error) {

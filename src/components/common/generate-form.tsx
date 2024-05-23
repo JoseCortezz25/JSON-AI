@@ -5,7 +5,7 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { PlusIcon, Trash2Icon } from "lucide-react";
 import { useState } from "react";
-import { generate } from "@/actions/generate";
+import { generate, generateUsingTypes } from "@/actions/generate";
 import { toast } from "sonner";
 import { Creativity, Models, Options } from "@/lib/types";
 import { Textarea } from "@/components/ui/textarea";
@@ -28,6 +28,7 @@ const GenerateForm = () => {
   const [count, setCount] = useState('');
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState('');
+  const [userInput, setUserInput] = useState<string>('');
   const [generateMode, setGenerateMode] = useState<GenerateMode>('inputs');
   const [rows, setRows] = useState<RowData[]>([
     { name: '', type: 'string', description: '' },
@@ -55,7 +56,7 @@ const GenerateForm = () => {
     return true;
   };
 
-  const submitGenerate = async () => {
+  const generateWithInputs = async () => {
     try {
       if (!validateRows()) {
         toast.error("Completa todos los campos..");
@@ -84,7 +85,54 @@ const GenerateForm = () => {
 
       const response = await generate(prompt, formattedFields, count, options);
       const result = response.toString().replaceAll('```json', '').replaceAll('```', '');
-      setData(result);
+      return result;
+    } catch (error) {
+      throw new Error('Error al generar el JSON. Verifica los valores de tu configuración.');
+    }
+  };
+
+  const generateWithTypes = async () => {
+    try {
+      if (prompt === '' || count === '' || userInput === '') {
+        toast.error("Ingresa el prompt y la cantidad de elementos.");
+        return;
+      }
+      setLoading(true);
+
+      const options: Options = {
+        model: (localStorage.getItem('model') as Models) || "",
+        creativity: (localStorage.getItem('creativity') as Creativity) || "medium",
+        apiKey: localStorage.getItem('apiKey') || ""
+      };
+
+      if (!options.model || !options.apiKey) {
+        toast.error("Por favor, selecciona un modelo y proporciona la API KEY.");
+        setLoading(false);
+        return;
+      }
+
+      const response = await generateUsingTypes(prompt, userInput, count, options);
+      const result = response.toString().replaceAll('```json', '').replaceAll('```', '');
+      return result;
+    } catch (error) {
+      throw new Error('Error al generar el JSON. Verifica los valores de tu configuración.');
+    }
+  };
+
+  const submitGenerate = async () => {
+    try {
+      if (generateMode === 'inputs') {
+        const result = await generateWithInputs();
+        if (!result) return;
+        setData(result);
+      }
+
+      if (generateMode === 'json') {
+        const result = await generateWithTypes();
+        if (!result) return;
+        setData(result);
+      }
+
       setLoading(false);
     } catch (error) {
       toast.error("Error al generar el JSON. Verifica los valores de tu configuración.");
@@ -250,16 +298,23 @@ const GenerateForm = () => {
 
             {generateMode === 'json' && (
               <div className="w-full flex">
-                <Textarea placeholder="Ingresa el type" className="min-h-[200px] max-h-[350px]" />
+                <Textarea
+                  placeholder="Ingresa el type"
+                  className="min-h-[200px] max-h-[350px]"
+                  onChange={({ target }) => setUserInput(target.value)}
+                  value={userInput}
+                />
               </div>
             )}
 
             <div className="flex flex-col space-y-2">
               <div className="grid grid-cols-[70%_1fr] gap-2">
-                <Button variant="outline" onClick={addRow}>
-                  <PlusIcon className="size-4 mr-1" />
-                  <p>Add field</p>
-                </Button>
+                {generateMode === 'inputs' && (
+                  <Button variant="outline" onClick={addRow}>
+                    <PlusIcon className="size-4 mr-1" />
+                    <p>Add field</p>
+                  </Button>
+                )}
                 <div className="flex gap-3">
                   <Button variant="ghost" onClick={onChangeGenerateMode}>
                     {generateMode === 'json' ? (
