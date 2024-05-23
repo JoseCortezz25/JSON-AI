@@ -7,11 +7,13 @@ import { PlusIcon, Trash2Icon } from "lucide-react";
 import { useState } from "react";
 import { generate } from "@/actions/generate";
 import { toast } from "sonner";
+import { Creativity, Models, Options } from "@/lib/types";
+import { Textarea } from "@/components/ui/textarea";
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import SkeletonPreview from "@/components/common/skeleton-preview";
 import SyntaxHighlighter from "react-syntax-highlighter/dist/esm/default-highlight";
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import FormSettings from "@/components/common/form-settings";
-import { Creativity, Models, Options } from "@/lib/types";
+import { InputsIcon, JSONIcon } from "./icons";
 
 interface RowData {
   name: string;
@@ -19,11 +21,14 @@ interface RowData {
   description: string;
 }
 
+type GenerateMode = 'inputs' | 'json';
+
 const GenerateForm = () => {
   const [prompt, setPrompt] = useState('');
   const [count, setCount] = useState('');
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState('');
+  const [generateMode, setGenerateMode] = useState<GenerateMode>('inputs');
   const [rows, setRows] = useState<RowData[]>([
     { name: '', type: 'string', description: '' },
     { name: '', type: 'string', description: '' },
@@ -116,6 +121,14 @@ const GenerateForm = () => {
     toast.info("JSON ha sido descargado.");
   };
 
+  const onChangeGenerateMode = () => {
+    if (generateMode === 'inputs') {
+      setGenerateMode('json');
+    } else {
+      setGenerateMode('inputs');
+    }
+  };
+
   const handleInputChange = (index: number, key: keyof RowData, value: string) => {
     const newRows = [...rows];
     newRows[index][key] = value;
@@ -170,22 +183,24 @@ const GenerateForm = () => {
               </div>
             </div>
 
-            <div className="grid grid-cols-[1fr_1fr_1fr_50px] gap-3">
-              <div>
-                <span className="text-xs mb-1 font-medium text-muted-foreground">Name</span>
+            {generateMode === 'inputs' && (
+              <div className="grid grid-cols-[1fr_1fr_1fr_50px] gap-3">
+                <div>
+                  <span className="text-xs mb-1 font-medium text-muted-foreground">Name</span>
+                </div>
+                <div>
+                  <span className="text-xs mb-1 font-medium text-muted-foreground">Type</span>
+                </div>
+                <div>
+                  <span className="text-xs mb-1 font-medium text-muted-foreground">Descritpion</span>
+                </div>
+                <div>
+                  <span className="text-xs mb-1 font-medium text-muted-foreground">Icon</span>
+                </div>
               </div>
-              <div>
-                <span className="text-xs mb-1 font-medium text-muted-foreground">Type</span>
-              </div>
-              <div>
-                <span className="text-xs mb-1 font-medium text-muted-foreground">Descritpion</span>
-              </div>
-              <div>
-                <span className="text-xs mb-1 font-medium text-muted-foreground">Icon</span>
-              </div>
-            </div>
+            )}
 
-            {rows.map((row, index) => (
+            {generateMode !== 'json' && rows.map((row, index) => (
               <div key={index} className="grid grid-cols-[1fr_1fr_1fr_50px] gap-3">
                 <Input
                   name={`${index}-name`}
@@ -233,33 +248,48 @@ const GenerateForm = () => {
               </div>
             ))}
 
-            <div className="flex flex-col space-y-2">
-              <Button variant="outline" onClick={addRow}>
-                <PlusIcon className="size-4 mr-1" />
-                <p>Add field</p>
-              </Button>
-              <div className="grid grid-cols-[1fr_70px] gap-2">
-                <Button variant="default" onClick={submitGenerate}>
-                  Get JSON Data
-                </Button>
-
-                <Sheet>
-                  <SheetTrigger className="flex justify-end">
-                    <div className="button-setting">
-                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-5">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 6h9.75M10.5 6a1.5 1.5 0 1 1-3 0m3 0a1.5 1.5 0 1 0-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-9.75 0h9.75" />
-                      </svg>
-                    </div>
-                  </SheetTrigger>
-                  <SheetContent className="w-[400px] sm:w-[540px]">
-                    <SheetHeader>
-                      <SheetTitle>Configuración</SheetTitle>
-                      <FormSettings />
-                    </SheetHeader>
-                  </SheetContent>
-                </Sheet>
-
+            {generateMode === 'json' && (
+              <div className="w-full flex">
+                <Textarea placeholder="Ingresa el type" className="min-h-[200px] max-h-[350px]" />
               </div>
+            )}
+
+            <div className="flex flex-col space-y-2">
+              <div className="grid grid-cols-[70%_1fr] gap-2">
+                <Button variant="outline" onClick={addRow}>
+                  <PlusIcon className="size-4 mr-1" />
+                  <p>Add field</p>
+                </Button>
+                <div className="flex gap-3">
+                  <Button variant="ghost" onClick={onChangeGenerateMode}>
+                    {generateMode === 'json' ? (
+                      <InputsIcon className="size-5" />
+                    ) : (
+                      <JSONIcon className="size-5" />
+                    )}
+                  </Button>
+
+                  <Sheet>
+                    <SheetTrigger className="flex justify-end">
+                      <div className="button-setting">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-5">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 6h9.75M10.5 6a1.5 1.5 0 1 1-3 0m3 0a1.5 1.5 0 1 0-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-9.75 0h9.75" />
+                        </svg>
+                      </div>
+                    </SheetTrigger>
+                    <SheetContent className="w-[400px] sm:w-[540px]">
+                      <SheetHeader>
+                        <SheetTitle>Configuración</SheetTitle>
+                        <FormSettings />
+                      </SheetHeader>
+                    </SheetContent>
+                  </Sheet>
+                </div>
+              </div>
+
+              <Button variant="default" onClick={submitGenerate}>
+                Get JSON Data
+              </Button>
             </div>
           </div>
 
@@ -275,6 +305,7 @@ const GenerateForm = () => {
                   className="bg-neutral-100 dark:bg-neutral-900 inline-flex items-center border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 text-foreground h-8 rounded-md">
                   JSON
                 </Button>
+
                 <Button
                   onClick={onCopy}
                   variant="ghost"
