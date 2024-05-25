@@ -12,7 +12,12 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "JSON AI",
-  description: "Create AI-generated JSON mocks."
+  description: "Create AI-generated JSON mocks.",
+  openGraph: {
+    title: "JSON AI",
+    description: "Create AI-generated JSON mocks.",
+    type: "website"
+  }
 };
 
 export default async function RootLayout({
