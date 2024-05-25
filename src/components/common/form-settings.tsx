@@ -6,8 +6,11 @@ import { Label } from "../ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
 import { Anthropic, Google, OpenAI } from "./icons";
 import { toast } from "sonner";
+import { useTranslations } from "next-intl";
 
 const FormSettings = () => {
+  const t = useTranslations('Settings');
+  const tAlerts = useTranslations('Alerts');
 
   const onSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -28,16 +31,15 @@ const FormSettings = () => {
     if (localStorage.getItem('apiKey') !== apiKey) {
       localStorage.setItem('apiKey', apiKey);
     }
-    toast.success('Los cambios se han guardado correctamente');
+    toast.success(tAlerts('savedChanges'));
   };
 
   return (
     <form onSubmit={onSubmit}>
       <div className="group-fields">
-        <Label>Selecciona el modelo</Label>
+        <Label>{t('labelModel')}</Label>
         <p>
-          Elige el modelo que deseas utilizar para generar el JSON.
-          Necesitas añadir la API KEY correspondiente al model seleccionado para poder utilizarlo.
+          {t('instructionModel')}
         </p>
         <Select defaultValue={localStorage.getItem('model') || ''}>
           <SelectTrigger className="w-full">
@@ -79,26 +81,27 @@ const FormSettings = () => {
       </div>
 
       <div className="group-fields">
-        <Label>Selecciona el nivel de creatividad</Label>
-        <p>Elige el nivel de creatividad que deseas que tenga el modelo para generar el JSON.</p>
+        <Label>{t('labelCreativity')}</Label>
+        <p>{t('instructionCreativity')}
+        </p>
         <Select defaultValue={localStorage.getItem('creativity') || ''}>
           <SelectTrigger className="w-full">
-            <SelectValue placeholder="Selecciona el nivel de creatividad" />
+            <SelectValue placeholder={t('labelCreativity')} />
           </SelectTrigger>
           <SelectContent>
             <SelectItem value="low">
               <div className="select-item-model">
-                <p>Bajo</p>
+                <p>{t('values.option1')}</p>
               </div>
             </SelectItem>
             <SelectItem value="medium">
               <div className="select-item-model">
-                <p>Medio</p>
+                <p>{t('values.option2')}</p>
               </div>
             </SelectItem>
             <SelectItem value="high">
               <div className="select-item-model">
-                <p>Alto</p>
+                <p>{t('values.option3')}</p>
               </div>
             </SelectItem>
           </SelectContent>
@@ -106,9 +109,9 @@ const FormSettings = () => {
       </div>
 
       <div className="group-fields">
-        <Label>Ingresa tu API KEY</Label>
+        <Label>{t('labelApikey')}</Label>
         <p>
-          Ingresa la API KEY correspondiente al modelo seleccionado para poder utilizarlo y generar el JSON.
+          {t('instructionApikey')}
         </p>
         <Input
           name="api-key"
@@ -119,7 +122,7 @@ const FormSettings = () => {
       </div>
 
       <div className="group-fields">
-        <Button>Guardar los cambios</Button>
+        <Button>{t('cta')}</Button>
       </div>
     </form>
   );
