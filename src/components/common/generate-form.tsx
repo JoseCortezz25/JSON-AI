@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { PlusIcon, Trash2Icon } from "lucide-react";
+import { ArrowDownToLine, ArrowLeftRightIcon, PlusIcon, Trash2Icon } from "lucide-react";
 import { useState } from "react";
 import { generate, generateUsingTypes } from "@/actions/generate";
 import { toast } from "sonner";
@@ -13,7 +13,6 @@ import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/co
 import SkeletonPreview from "@/components/common/skeleton-preview";
 import SyntaxHighlighter from "react-syntax-highlighter/dist/esm/default-highlight";
 import FormSettings from "@/components/common/form-settings";
-import { InputsIcon, JSONIcon } from "./icons";
 import { useTranslations } from "next-intl";
 
 interface RowData {
@@ -341,12 +340,12 @@ const GenerateForm = () => {
             <div className="flex gap-3">
               <Sheet>
                 <SheetTrigger className="flex justify-end">
-                  <Button variant="ghost" className="button-setting">
+                  <div className="button-setting">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-5">
                       <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 6h9.75M10.5 6a1.5 1.5 0 1 1-3 0m3 0a1.5 1.5 0 1 0-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-9.75 0h9.75" />
                     </svg>
                     {tForm('ctaSettings')}
-                  </Button>
+                  </div>
                 </SheetTrigger>
                 <SheetContent className="w-[400px] sm:w-[540px]">
                   <SheetHeader>
@@ -356,11 +355,7 @@ const GenerateForm = () => {
                 </SheetContent>
               </Sheet>
               <Button variant="ghost" onClick={onChangeGenerateMode} className="dark:text-white flex gap-3">
-                {generateMode === 'json' ? (
-                  <InputsIcon className="size-5 dark:text-white" />
-                ) : (
-                  <JSONIcon className="size-5 dark:text-white" />
-                )}
+                <ArrowLeftRightIcon className="size-[15px]" />
                 {tForm('ctaChangeMode')}
               </Button>
             </div>
@@ -376,7 +371,7 @@ const GenerateForm = () => {
                   onClick={onDownloadJSON}
                   variant="ghost"
                   className="bg-neutral-100 dark:bg-neutral-900 inline-flex items-center border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 text-foreground h-8 rounded-md">
-                  JSON
+                  <ArrowDownToLine className="size-[15px]" />
                 </Button>
 
                 <Button

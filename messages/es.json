@@ -73,5 +73,8 @@
     "downloadError": "No hay datos para descargar.",
     "downloadSuccess": "JSON ha sido descargado.",
     "almostThreeFields": "Necesitas al menos 3 campos para generar el JSON."
+  },
+  "Footer": {
+    "ctaRepository": "Ver repositorio"
   }
 }

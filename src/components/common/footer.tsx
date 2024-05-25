@@ -1,7 +1,9 @@
+import { useTranslations } from "next-intl";
 import { Button } from "../ui/button";
 import Logo from "./logo";
 
 const Footer = () => {
+  const t = useTranslations('Footer');
   return (
     <footer className="flex items-center justify-between w-full p-4 border-t border-neutral-200 dark:border-neutral-800">
       <div className="flex-col md:flex-row w-full max-w-7xl mx-auto flex gap-4 items-center justify-between">
@@ -29,7 +31,7 @@ const Footer = () => {
                 </svg>
               </div>
 
-              <p>Ver repositorio</p>
+              <p>{t('ctaRepository')}</p>
             </Button>
           </a>
         </nav>
