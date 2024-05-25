@@ -121,7 +121,7 @@ pre {
 }
 
 .button-setting {
-  @apply text-black dark:text-white hover:bg-gray-100 dark:hover:bg-[#292524] h-full w-[48px] rounded-lg;
+  @apply text-black dark:text-white hover:bg-gray-100 dark:hover:bg-[#292524] rounded-lg gap-3;
   @apply flex items-center justify-center;
 }
 

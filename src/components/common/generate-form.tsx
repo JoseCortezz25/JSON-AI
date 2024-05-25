@@ -14,6 +14,7 @@ import SkeletonPreview from "@/components/common/skeleton-preview";
 import SyntaxHighlighter from "react-syntax-highlighter/dist/esm/default-highlight";
 import FormSettings from "@/components/common/form-settings";
 import { InputsIcon, JSONIcon } from "./icons";
+import { useTranslations } from "next-intl";
 
 interface RowData {
   name: string;
@@ -35,7 +36,9 @@ const GenerateForm = () => {
     { name: '', type: 'string', description: '' },
     { name: '', type: 'string', description: '' }
   ]);
-
+  const t = useTranslations('Settings');
+  const tForm = useTranslations('GenerateForm');
+  const tAlerts = useTranslations('Alerts');
 
   const formatInputs = (fields: RowData[]) => {
     let formattedFields = '';
@@ -59,12 +62,12 @@ const GenerateForm = () => {
   const generateWithInputs = async () => {
     try {
       if (!validateRows()) {
-        toast.error("Completa todos los campos..");
+        toast.error(tAlerts('emptyFields'));
         return;
       }
 
       if (prompt === '' || count === '') {
-        toast.error("Ingresa el prompt y la cantidad de elementos.");
+        toast.error(tAlerts('emptyPromptAndCount'));
         return;
       }
       setLoading(true);
@@ -78,7 +81,7 @@ const GenerateForm = () => {
       };
 
       if (!options.model || !options.apiKey) {
-        toast.error("Por favor, selecciona un modelo y proporciona la API KEY.");
+        toast.error(tAlerts('emptyModel'));
         setLoading(false);
         return;
       }
@@ -87,14 +90,14 @@ const GenerateForm = () => {
       const result = response.toString().replaceAll('```json', '').replaceAll('```', '');
       return result;
     } catch (error) {
-      throw new Error('Error al generar el JSON. Verifica los valores de tu configuración.');
+      throw new Error(tAlerts('generateError'));
     }
   };
 
   const generateWithTypes = async () => {
     try {
       if (prompt === '' || count === '' || userInput === '') {
-        toast.error("Ingresa el prompt y la cantidad de elementos.");
+        toast.error(tAlerts('emptyFields'));
         return;
       }
       setLoading(true);
@@ -106,7 +109,7 @@ const GenerateForm = () => {
       };
 
       if (!options.model || !options.apiKey) {
-        toast.error("Por favor, selecciona un modelo y proporciona la API KEY.");
+        toast.error(tAlerts('emptyModel'));
         setLoading(false);
         return;
       }
@@ -115,7 +118,7 @@ const GenerateForm = () => {
       const result = response.toString().replaceAll('```json', '').replaceAll('```', '');
       return result;
     } catch (error) {
-      throw new Error('Error al generar el JSON. Verifica los valores de tu configuración.');
+      throw new Error(tAlerts('generateError'));
     }
   };
 
@@ -135,25 +138,25 @@ const GenerateForm = () => {
 
       setLoading(false);
     } catch (error) {
-      toast.error("Error al generar el JSON. Verifica los valores de tu configuración.");
+      toast.error(tAlerts('generateError'));
       setLoading(false);
     }
   };
 
   const onCopy = () => {
     if (!navigator.clipboard) {
-      toast.error("No se puede copiar al portapapeles.");
+      toast.error(tAlerts('copiedResultError'));
       return;
     }
 
     if (!data) return;
     navigator.clipboard.writeText(data);
-    toast.info("JSON ha sido copiado al portapapeles.");
+    toast.info(tAlerts('copiedResult'));
   };
 
   const onDownloadJSON = () => {
     if (!data) {
-      toast.error("No hay datos para descargar.");
+      toast.error(tAlerts('downloadError'));
       return;
     }
 
@@ -166,7 +169,7 @@ const GenerateForm = () => {
     link.click();
     URL.revokeObjectURL(url);
 
-    toast.info("JSON ha sido descargado.");
+    toast.info(tAlerts('downloadSuccess'));
   };
 
   const onChangeGenerateMode = () => {
@@ -189,7 +192,7 @@ const GenerateForm = () => {
 
   const removeField = (index: number) => {
     if (rows.length === 3) {
-      toast.error("Necesitas al menos 3 campos para generar el JSON.");
+      toast.error(tAlerts('almostThreeFields'));
       return;
     };
     const newRows = [...rows];
@@ -202,27 +205,32 @@ const GenerateForm = () => {
       <div className="max-w-7xl mx-auto py-4">
         <div className="flex flex-col md:flex-row gap-6">
           <div className="flex flex-col gap-2 w-full md:w-[50%] md:flex-1" id="form-json">
+
             <div className="flex gap-3 justify-between">
               <div className="flex flex-col w-[80%]">
                 <Label htmlFor="prompt">
-                  <span className="text-xs mb-1 font-medium text-muted-foreground">Prompt</span>
+                  <span className="text-xs mb-1 font-medium text-muted-foreground">
+                    {tForm('labels.prompt')}
+                  </span>
                 </Label>
                 <Input
                   name="prompt"
                   type="text"
-                  placeholder="Most listened musics in Hard Rock category"
+                  placeholder={tForm('placeholder.prompt')}
                   value={prompt}
                   onChange={(e) => setPrompt(e.target.value)}
                 />
               </div>
               <div className="flex flex-col w-[17%]">
                 <Label htmlFor="limit">
-                  <span className="text-xs mb-1 font-medium text-muted-foreground">Limit</span>
+                  <span className="text-xs mb-1 font-medium text-muted-foreground">
+                    {tForm('labels.limit')}
+                  </span>
                 </Label>
                 <Input
                   name="limit"
                   type="number"
-                  placeholder="10"
+                  placeholder={tForm('placeholder.limit')}
                   min={1}
                   max={15}
                   value={count}
@@ -234,16 +242,24 @@ const GenerateForm = () => {
             {generateMode === 'inputs' && (
               <div className="grid grid-cols-[1fr_1fr_1fr_50px] gap-3">
                 <div>
-                  <span className="text-xs mb-1 font-medium text-muted-foreground">Name</span>
+                  <span className="text-xs mb-1 font-medium text-muted-foreground">
+                    {tForm('labels.name')}
+                  </span>
                 </div>
                 <div>
-                  <span className="text-xs mb-1 font-medium text-muted-foreground">Type</span>
+                  <span className="text-xs mb-1 font-medium text-muted-foreground">
+                    {tForm('labels.type')}
+                  </span>
                 </div>
                 <div>
-                  <span className="text-xs mb-1 font-medium text-muted-foreground">Descritpion</span>
+                  <span className="text-xs mb-1 font-medium text-muted-foreground">
+                    {tForm('labels.description')}
+                  </span>
                 </div>
                 <div>
-                  <span className="text-xs mb-1 font-medium text-muted-foreground">Icon</span>
+                  <span className="text-xs mb-1 font-medium text-muted-foreground">
+                    {tForm('labels.icon')}
+                  </span>
                 </div>
               </div>
             )}
@@ -253,7 +269,7 @@ const GenerateForm = () => {
                 <Input
                   name={`${index}-name`}
                   type="text"
-                  placeholder="Name"
+                  placeholder={tForm('placeholder.name')}
                   value={row.name}
                   onChange={(e) => handleInputChange(index, 'name', e.target.value)}
                 />
@@ -286,7 +302,7 @@ const GenerateForm = () => {
                 <Input
                   name={`${index}-description`}
                   type="text"
-                  placeholder="Description"
+                  placeholder={tForm('placeholder.description')}
                   value={row.description}
                   onChange={(e) => handleInputChange(index, 'description', e.target.value)}
                 />
@@ -308,42 +324,44 @@ const GenerateForm = () => {
             )}
 
             <div className="flex flex-col space-y-2">
-              <div className="grid grid-cols-[70%_1fr] gap-2">
+              <div className="flex w-full gap-2">
                 {generateMode === 'inputs' && (
-                  <Button variant="outline" onClick={addRow}>
+                  <Button variant="outline" className="w-full" onClick={addRow}>
                     <PlusIcon className="size-4 mr-1" />
-                    <p>Add field</p>
+                    <p>{tForm('ctaAddField')}</p>
                   </Button>
                 )}
-                <div className="flex gap-3">
-                  <Button variant="ghost" onClick={onChangeGenerateMode}>
-                    {generateMode === 'json' ? (
-                      <InputsIcon className="size-5" />
-                    ) : (
-                      <JSONIcon className="size-5" />
-                    )}
-                  </Button>
-
-                  <Sheet>
-                    <SheetTrigger className="flex justify-end">
-                      <div className="button-setting">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-5">
-                          <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 6h9.75M10.5 6a1.5 1.5 0 1 1-3 0m3 0a1.5 1.5 0 1 0-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-9.75 0h9.75" />
-                        </svg>
-                      </div>
-                    </SheetTrigger>
-                    <SheetContent className="w-[400px] sm:w-[540px]">
-                      <SheetHeader>
-                        <SheetTitle>Configuración</SheetTitle>
-                        <FormSettings />
-                      </SheetHeader>
-                    </SheetContent>
-                  </Sheet>
-                </div>
               </div>
 
               <Button variant="default" onClick={submitGenerate}>
-                Get JSON Data
+                {tForm('ctaSubmit')}
+              </Button>
+            </div>
+
+            <div className="flex gap-3">
+              <Sheet>
+                <SheetTrigger className="flex justify-end">
+                  <Button variant="ghost" className="button-setting">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-5">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 6h9.75M10.5 6a1.5 1.5 0 1 1-3 0m3 0a1.5 1.5 0 1 0-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-9.75 0h9.75" />
+                    </svg>
+                    {tForm('ctaSettings')}
+                  </Button>
+                </SheetTrigger>
+                <SheetContent className="w-[400px] sm:w-[540px]">
+                  <SheetHeader>
+                    <SheetTitle>{t('title')}</SheetTitle>
+                    <FormSettings />
+                  </SheetHeader>
+                </SheetContent>
+              </Sheet>
+              <Button variant="ghost" onClick={onChangeGenerateMode} className="dark:text-white flex gap-3">
+                {generateMode === 'json' ? (
+                  <InputsIcon className="size-5 dark:text-white" />
+                ) : (
+                  <JSONIcon className="size-5 dark:text-white" />
+                )}
+                {tForm('ctaChangeMode')}
               </Button>
             </div>
           </div>
@@ -352,7 +370,7 @@ const GenerateForm = () => {
             <div className="relative scrollbar-hide overflow-auto max-h-[400px] shadow-sm min-h-[350px] border border-neutral-200 dark:border-neutral-800 bg-neutral-100 dark:bg-neutral-900 w-full rounded-lg p-1">
               <div className="absolute right-3 top-3 flex items-center justify-end gap-2 z-[2]">
                 <span className="bg-neutral-100 dark:bg-neutral-900 inline-flex items-center border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 text-foreground h-8 rounded-md">
-                  {data.split('}').length - 1} items
+                  {data.split('}').length - 1} {tForm('count')}
                 </span>
                 <Button
                   onClick={onDownloadJSON}

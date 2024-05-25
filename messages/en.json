@@ -24,5 +24,54 @@
     "title": "Page not found",
     "description": "Sorry, it seems like the page you are looking for does not exist. Don't worry, you can go back to the home page!",
     "cta": "Go back to Home"
+  },
+  "Settings": {
+    "title": "Settings",
+    "labelModel": "Select the model",
+    "instructionModel": "Choose the model you want to use to generate the JSON. You need to add the corresponding API KEY for the selected model to use it.",
+    "labelCreativity": "Select the creativity level",
+    "instructionCreativity": "Choose the level of creativity you want the model to have to generate the JSON.",
+    "labelApikey": "Enter your API KEY",
+    "instructionApikey": "Enter the API KEY corresponding to the selected model to use it and generate the JSON.",
+    "values": {
+      "option1": "Low",
+      "option2": "Medium",
+      "option3": "High"
+    },
+    "cta": "Save changes"
+  },
+  "GenerateForm": {
+    "labels": {
+      "prompt": "Prompt",
+      "limit": "Limit",
+      "name": "Name",
+      "type": "Type",
+      "description": "Description",
+      "icon": "Icon"
+    },
+    "placeholder": {
+      "prompt": "Most Listened musics in Hard Rock Category",
+      "limit": "10",
+      "name": "Name",
+      "type": "Type",
+      "description": "Description"
+    },
+    "count": "items",
+    "ctaAddField": "Add field",
+    "ctaSubmit": "Get JSON Data",
+    "ctaSettings": "Settings",
+    "ctaChangeMode": "Change generation mode"
+  },
+  "Alerts": {
+    "emptyFields": "Please fill in all fields.",
+    "savedChanges": "Changes saved successfully.",
+    "copiedResult": "JSON copied to clipboard.",
+    "emptyPromptAndCount": "Enter the prompt and the number of items.",
+    "emptyModel": "Please select a model and provide the API KEY.",
+    "generateError": "Error generating the JSON. Check your configuration values.",
+    "copiedResultError": "Unable to copy to clipboard.",
+    "downloadError": "No data to download.",
+    "downloadSuccess": "JSON has been downloaded.",
+    "almostThreeFields": "You need at least 3 fields to generate the JSON."
   }
 }
