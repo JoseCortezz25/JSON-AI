@@ -1,6 +1,4 @@
 "use client";
-import { examples } from "@/lib/data";
-import { Badge } from "../ui/badge";
 import GenerateForm from "./generate-form";
 import { useTranslations } from "next-intl";
 
@@ -17,17 +15,6 @@ const JSONGenerateSection = () => {
           <p className="[&:not(:first-child)]:mt-6 text-xl text-muted-foreground !mt-2 mb-2">
             {t('form.title')}
           </p>
-        </div>
-
-        <div>
-          <h3 className="mb-3 text-sm text-muted-foreground">
-            {t('form.subtitle')}
-          </h3>
-          <div className="flex flex-wrap gap-2">
-            {examples.slice(0, 6).map((example) => (
-              <Badge variant="outline" key={example.id}>{example.label}</Badge>
-            ))}
-          </div>
         </div>
 
         <div className="w-full sm:mb-[9rem]">
