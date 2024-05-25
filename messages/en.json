@@ -58,7 +58,9 @@
     },
     "count": "items",
     "ctaAddField": "Add field",
-    "ctaSubmit": "Get JSON Data"
+    "ctaSubmit": "Get JSON Data",
+    "ctaSettings": "Settings",
+    "ctaChangeMode": "Change generation mode"
   },
   "Alerts": {
     "emptyFields": "Please fill in all fields.",

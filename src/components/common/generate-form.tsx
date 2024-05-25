@@ -205,6 +205,7 @@ const GenerateForm = () => {
       <div className="max-w-7xl mx-auto py-4">
         <div className="flex flex-col md:flex-row gap-6">
           <div className="flex flex-col gap-2 w-full md:w-[50%] md:flex-1" id="form-json">
+
             <div className="flex gap-3 justify-between">
               <div className="flex flex-col w-[80%]">
                 <Label htmlFor="prompt">
@@ -323,42 +324,44 @@ const GenerateForm = () => {
             )}
 
             <div className="flex flex-col space-y-2">
-              <div className="grid grid-cols-[70%_1fr] gap-2">
+              <div className="flex w-full gap-2">
                 {generateMode === 'inputs' && (
-                  <Button variant="outline" onClick={addRow}>
+                  <Button variant="outline" className="w-full" onClick={addRow}>
                     <PlusIcon className="size-4 mr-1" />
                     <p>{tForm('ctaAddField')}</p>
                   </Button>
                 )}
-                <div className="flex gap-3">
-                  <Button variant="ghost" onClick={onChangeGenerateMode} className="dark:text-white">
-                    {generateMode === 'json' ? (
-                      <InputsIcon className="size-5 dark:text-white" />
-                    ) : (
-                      <JSONIcon className="size-5 dark:text-white" />
-                    )}
-                  </Button>
-
-                  <Sheet>
-                    <SheetTrigger className="flex justify-end">
-                      <div className="button-setting">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-5">
-                          <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 6h9.75M10.5 6a1.5 1.5 0 1 1-3 0m3 0a1.5 1.5 0 1 0-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-9.75 0h9.75" />
-                        </svg>
-                      </div>
-                    </SheetTrigger>
-                    <SheetContent className="w-[400px] sm:w-[540px]">
-                      <SheetHeader>
-                        <SheetTitle>{t('title')}</SheetTitle>
-                        <FormSettings />
-                      </SheetHeader>
-                    </SheetContent>
-                  </Sheet>
-                </div>
               </div>
 
               <Button variant="default" onClick={submitGenerate}>
                 {tForm('ctaSubmit')}
+              </Button>
+            </div>
+
+            <div className="flex gap-3">
+              <Sheet>
+                <SheetTrigger className="flex justify-end">
+                  <Button variant="ghost" className="button-setting">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-5">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 6h9.75M10.5 6a1.5 1.5 0 1 1-3 0m3 0a1.5 1.5 0 1 0-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-9.75 0h9.75" />
+                    </svg>
+                    {tForm('ctaSettings')}
+                  </Button>
+                </SheetTrigger>
+                <SheetContent className="w-[400px] sm:w-[540px]">
+                  <SheetHeader>
+                    <SheetTitle>{t('title')}</SheetTitle>
+                    <FormSettings />
+                  </SheetHeader>
+                </SheetContent>
+              </Sheet>
+              <Button variant="ghost" onClick={onChangeGenerateMode} className="dark:text-white flex gap-3">
+                {generateMode === 'json' ? (
+                  <InputsIcon className="size-5 dark:text-white" />
+                ) : (
+                  <JSONIcon className="size-5 dark:text-white" />
+                )}
+                {tForm('ctaChangeMode')}
               </Button>
             </div>
           </div>

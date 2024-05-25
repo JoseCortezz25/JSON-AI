@@ -58,7 +58,9 @@
     },
     "count": "items",
     "ctaAddField": "Agregar campo",
-    "ctaSubmit": "Generar JSON"
+    "ctaSubmit": "Generar JSON",
+    "ctaSettings": "Configuración",
+    "ctaChangeMode": "Cambiar modo de generación"
   },
   "Alerts": {
     "emptyFields": "Completa todos los campos.",
