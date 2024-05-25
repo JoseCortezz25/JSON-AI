@@ -1,7 +1,7 @@
 {
   "HomePage": {
     "banner": {
-      "title": "Crear mocks en JSON generados por IA.",
+      "title": "Crea mocks en JSON generados por IA.",
       "description": "Obtén datos en formato JSON sobre cualquier tema con solo una instrucción. Comienza a obtener información de manera sencilla.",
       "primaryCta": "Comenzar a generar",
       "secondaryCta": "Ver repositorio"
@@ -24,5 +24,52 @@
     "title": "Página no encontrada",
     "description": "Lo sentimos, parece que la página que estás buscando no existe. No te preocupes, ¡puedes volver a la página de inicio!",
     "cta": "Volver al Home"
+  },
+  "Settings": {
+    "title": "Configuración",
+    "labelModel": "Selecciona el modelo",
+    "instructionModel": "Elige el modelo que deseas utilizar para generar el JSON. Necesitas añadir la API KEY correspondiente al model seleccionado para poder utilizarlo.",
+    "labelCreativity": "Selecciona el nivel de creatividad",
+    "instructionCreativity": "Elige el nivel de creatividad que deseas que tenga el modelo para generar el JSON.",
+    "labelApikey": "Ingresa tu API KEY",
+    "instructionApikey": "Ingresa la API KEY correspondiente al modelo seleccionado para poder utilizarlo y generar el JSON.",
+    "values": {
+      "option1": "Bajo",
+      "option2": "Medio",
+      "option3": "Alto"
+    },
+    "cta": "Guardar los cambios"
+  },
+  "GenerateForm": {
+    "labels": {
+      "prompt": "Prompt",
+      "limit": "Límite",
+      "name": "Nombre",
+      "type": "Tipo",
+      "description": "Descripción",
+      "icon": "Icono"
+    },
+    "placeholder": {
+      "prompt": "Most Listened musics in Hard Rock Category",
+      "limit": "10",
+      "name": "Nombre",
+      "type": "Tipo",
+      "description": "Descripción"
+    },
+    "count": "items",
+    "ctaAddField": "Agregar campo",
+    "ctaSubmit": "Generar JSON"
+  },
+  "Alerts": {
+    "emptyFields": "Completa todos los campos.",
+    "savedChanges": "Los cambios se han guardado correctamente.",
+    "copiedResult": "JSON ha sido copiado al portapapeles.",
+    "emptyPromptAndCount": "Ingresa el prompt y la cantidad de elementos.",
+    "emptyModel": "Por favor, selecciona un modelo y proporciona la API KEY.",
+    "generateError": "Error al generar el JSON. Verifica los valores de tu configuración.",
+    "copiedResultError": "No se puede copiar al portapapeles.",
+    "downloadError": "No hay datos para descargar.",
+    "downloadSuccess": "JSON ha sido descargado.",
+    "almostThreeFields": "Necesitas al menos 3 campos para generar el JSON."
   }
 }
