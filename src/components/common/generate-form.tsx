@@ -337,7 +337,7 @@ const GenerateForm = () => {
               </Button>
             </div>
 
-            <div className="flex gap-3">
+            <div className="flex flex-wrap gap-3">
               <Sheet>
                 <SheetTrigger className="flex justify-end">
                   <div className="button-setting">

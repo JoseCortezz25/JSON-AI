@@ -7,6 +7,7 @@ import Footer from "@/components/common/footer";
 import "./globals.scss";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from 'next-intl/server';
+import { GoogleAnalytics } from '@next/third-parties/google';
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -45,6 +46,7 @@ export default async function RootLayout({
         </ThemeProvider>
         <Toaster richColors />
       </body>
+      <GoogleAnalytics gaId={process.env.GOOGLE_ANALYTICS_ID} />
     </html>
   );
 }
