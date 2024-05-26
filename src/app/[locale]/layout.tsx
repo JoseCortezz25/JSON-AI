@@ -46,7 +46,7 @@ export default async function RootLayout({
         </ThemeProvider>
         <Toaster richColors />
       </body>
-      <GoogleAnalytics gaId={process.env.GOOGLE_ANALYTICS_ID} />
+      <GoogleAnalytics gaId={process.env.GOOGLE_ANALYTICS_ID as string} />
     </html>
   );
 }
