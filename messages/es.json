@@ -1,7 +1,7 @@
 {
   "HomePage": {
     "banner": {
-      "title": "Crea mocks en JSON generados por IA.",
+      "title": "Crea mocks asistido por IA",
       "description": "Obtén datos en formato JSON sobre cualquier tema con solo una instrucción. Comienza a obtener información de manera sencilla.",
       "primaryCta": "Comenzar a generar",
       "secondaryCta": "Ver repositorio"
