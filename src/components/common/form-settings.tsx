@@ -55,7 +55,10 @@ const FormSettings = () => {
             <SelectItem value="gpt-3.5-turbo-0125" className="w-full cursor-pointer">
               <div className="select-item-model">
                 <OpenAI className="text-black dark:text-white" />
-                <p>OpenAI - GPT-3.5 Turbo</p>
+                <span className="flex gap-2 items-center">
+                  <p>OpenAI - GPT-4o-mini</p>
+                  <span className="bg-emerald-300 rounded-full px-2.5 py-0.5 text-[12px]">New</span>
+                </span>
               </div>
             </SelectItem>
             <SelectItem value="gemini-pro" className="w-full cursor-pointer">

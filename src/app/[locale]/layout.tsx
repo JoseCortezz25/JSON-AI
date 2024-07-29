@@ -18,7 +18,8 @@ export const metadata: Metadata = {
     title: "JSON AI",
     description: "Create AI-generated JSON mocks.",
     type: "website"
-  }
+  },
+  metadataBase: new URL("https://json-ai-app.vercel.app/")
 };
 
 export default async function RootLayout({
